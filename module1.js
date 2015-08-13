@@ -31,9 +31,89 @@ function getRandomInt(min, max) {
 
 $(document).ready(function() {
     var img = new Image();
-    img.src = "img/cat.jpg";
-
-
-
-
+    img.src = "img/Jackson2.JPG";
+    //makeMoreBlue(img, 100);
+    //makeMoreRed(img, 100);
+    //makeMoreGreen(img, 100);
+    //brighten(img, 100);
+    //makeInvert(img);
+    makeNoise(img);
 });
+
+function makeMoreBlue(img, adjustment){
+
+    var pixels = ImageUtils.getPixels(img);
+    var length = pixels.data.length;
+    var data = pixels.data;
+
+    for (var i = 0; i < length; i += 4) {
+        data[i+2] += adjustment;
+    }
+ImageUtils.putPixels(pixels, img.width, img.height);
+}
+
+function makeMoreRed(img, adjustment) {
+
+    var pixels = ImageUtils.getPixels(img);
+    var length = pixels.data.length;
+    var data = pixels.data;
+
+    for (var i = 0; i < length; i += 4) {
+        data[i] = data[i] + adjustment;
+    }
+    ImageUtils.putPixels(pixels, img.width, img.height);
+
+}
+
+function makeMoreGreen(img, adjustment) {
+
+    var pixels = ImageUtils.getPixels(img);
+    var length = pixels.data.length;
+    var data = pixels.data;
+
+    for (var i = 0; i < length; i += 4) {
+        data[i+1] = data[i+1] + adjustment;
+    }
+    ImageUtils.putPixels(pixels, img.width, img.height);
+}
+
+function brighten(img, adjustment) {
+    var pixels = ImageUtils.getPixels(img);
+    var length = pixels.data.length;
+    var data = pixels.data;
+
+    for (var i = 0; i < length; i += 4) {
+        data[i] = data[i] + adjustment;
+        data[i+1] = data[i+1] + adjustment;
+        data[i+2] = data[i+2] + adjustment;
+    }
+    ImageUtils.putPixels(pixels, img.width, img.height);
+}
+
+function makeInvert(img, adjustment) {
+    var pixels = ImageUtils.getPixels(img);
+    var length = pixels.data.length;
+    var data = pixels.data;
+
+    for (var i = 0; i < length; i += 4) {
+        data[i] = 255 - data[i];
+        data[i+1] = 255 - data[i+1];
+        data[1+2] = 255 - data[i+2];
+    }
+    ImageUtils.putPixels(pixels, img.width, img.height);
+}
+
+function makeNoise(img, level) {
+    var pixels = ImageUtils.getPixels(img);
+    var length = pixels.data.length;
+    var data = pixels.data;
+
+    for (var i = 0; i < length; i += 4) {
+        var adjustment = getRandomInt(-50,50);
+
+        data[i] = data[i] + adjustment;
+        data[i+1] = data[i+1] + adjustment;
+        data[i+2] = data[i+2] + adjustment;
+    }
+    ImageUtils.putPixels(pixels, img.width, img.height);
+}
